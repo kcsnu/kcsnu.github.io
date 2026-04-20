@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorithms &amp; Data Structures | Keir Charlton-Molloy</title>
+  <meta name="description" content="Expanding the weight history feature beyond a passive list. Adds normalized dates, date-range filtering, rolling calculations, and goal-aware projections.">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='Georgia, serif'%3EK%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="site-nav__inner">
+    <a href="./" class="site-nav__brand">Keir Charlton&#8209;Molloy <span>&nbsp;/ ePortfolio</span></a>
+    <ul class="site-nav__links">
+      <li><a href="./">Self-Assessment</a></li>
+      <li><a href="code-review.html">Code Review</a></li>
+      <li><a href="software-engineering.html">Software Engineering &amp; Design</a></li>
+      <li><a href="algorithms.html" aria-current="page">Algorithms &amp; Data Structures</a></li>
+      <li><a href="databases.html">Databases</a></li>
+      <li><a href="files.html">Files</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <header class="page-header">
+    <p class="page-header__eyebrow"><span class="section-number">02</span> Enhancement Two</p>
+    <h1>Algorithms &amp; Data Structures</h1>
+    <p class="page-header__lede">Expanding the weight history feature beyond a passive list. The enhancement adds normalized dates, date-range filtering, rolling calculations, and goal-aware projections.</p>
+  </header>
+
+  <article class="prose">
+
+    <aside class="meta-panel">
+      <dl>
+        <dt>Artifact</dt>
+        <dd>Mere Metrics: Weight Tracker, history and analytics feature</dd>
+        <dt>Focus</dt>
+        <dd>Data representation, range-based processing, rolling calculations, goal-direction logic</dd>
+        <dt>Repositories</dt>
+        <dd>
+          <a href="https://github.com/kcsnu/mere-metrics-original">Original</a> &middot;
+          <a href="https://github.com/kcsnu/mere-metrics-enhanced">Enhanced</a>
+        </dd>
+        <dt>Outcomes addressed</dt>
+        <dd>
+          <ul class="outcome-list">
+            <li>Communication</li>
+            <li>Design &amp; trade-offs</li>
+            <li>Tools &amp; techniques</li>
+          </ul>
+        </dd>
+      </dl>
+    </aside>
+
+    <h2>About the artifact</h2>
+
+    <p class="dropcap">For this enhancement, I continued building on the same Mere Metrics: Weight Tracker project I had been refining throughout the capstone. This is the Java Android app originally built in a mobile architecture and programming course, developed in Android Studio. In the software engineering enhancement, I had improved the overall structure of the app by refactoring it into clearer layers and replacing the manual history table with a RecyclerView-based design. For this enhancement, I focused on the algorithms and data structures category by expanding the existing weight history feature into more of an analytics engine. Instead of only showing past entries as a list, the app now processes historical weight data in more meaningful ways and gives the user better insight into trends, progress, and filtered time periods.</p>
+
+    <h2>Why I included this artifact</h2>
+
+    <p>I selected this artifact again because the weight history feature already gave me a strong starting point for more advanced data processing. Using the same project across enhancements also helps keep the ePortfolio cohesive while still allowing each enhancement to stay distinct. In the original version, the app stored history entries and displayed them to the user, but it didn&rsquo;t really provide any analysis beyond showing the saved rows. With this enhancement, I improved the artifact by normalizing dates into a consistent format for processing, keeping entries in chronological order, adding date-range filtering, and calculating rolling averages, weekly and monthly change, percent progress toward the user&rsquo;s goal, and a projected goal date. I also refined the logic for determining goal direction and identifying the first date the goal was actually reached when the user had already met it. These changes demonstrate algorithm design, data structure selection, searching, range-based processing, and the ability to turn stored data into more useful information for the user.</p>
+
+    <h2>Course outcomes alignment</h2>
+
+    <p>This enhancement met the course outcomes I originally planned to address in my enhancement plan. I focused on outcomes 2, 3, and 4, with outcome 3 being the main focus for this category. It most directly supports outcome 3 because the enhancement required me to design and evaluate a better computing solution for handling historical weight data. I moved the application beyond simple storage and display by adding normalized processing, filtered views, rolling calculations, and goal-based analytics. It also supports outcome 2 because I&rsquo;m clearly explaining the enhancement, the design choices, and the reasoning behind the improvements through the narrative and supporting project materials. It supports outcome 4 because the enhancement applies practical techniques and tools to provide more value to the user by turning a simple history list into a more informative analytics feature. I don&rsquo;t have any major changes to my outcome coverage plan. Outcome 5 continues to be addressed more directly in the database enhancement, although I still continued using validation and defensive handling practices in this enhancement as part of the overall app design.</p>
+
+    <h2>Performance and complexity</h2>
+
+    <p>The enhancement is backed by a small set of deliberate algorithmic choices that keep filter changes responsive even as a user&rsquo;s history grows.</p>
+
+    <p>Normalization is done once per screen load. The raw weight history is parsed, converted to ISO epoch days, validated, and sorted into a <code>NormalizedWeightSeries</code> backed by a primitive <code>long[]</code>. This initial pass runs in <strong>O(n log n)</strong> time (dominated by the sort), where <em>n</em> is the number of stored entries. Using a primitive array rather than a boxed <code>List&lt;Long&gt;</code> keeps memory overhead low and avoids per-entry allocation during later reads.</p>
+
+    <p>Filter-range lookups are binary-searched. The date-range filter uses <code>lowerBound</code> and <code>upperBound</code> implementations that run in <strong>O(log n)</strong> rather than scanning the full history for every filter change. This matters because the insights screen allows filter changes at interactive speed; a linear scan would re-visit the entire stored history every time the user picked a different date range.</p>
+
+    <p>Per-filter calculations are linear in the filtered window. Once the start and end indices are located, the rolling 7-day average, weekly change, monthly change, and percent-progress calculations each run in <strong>O(k)</strong> time, where <em>k</em> is the number of entries in the active date range. The first-goal-reached scan also runs in <strong>O(k)</strong> worst case and exits early when a match is found.</p>
+
+    <p>Goal direction is stabilized against the full history. To avoid a filter accidentally reversing the goal&rsquo;s direction (for example, making a weight-loss goal look like a weight-gain goal when only recent entries are visible), the direction baseline is always taken from the first entry in the full series rather than from the filtered window. Goal reached detection still reflects the latest entry in the active range, so the filter affects what the user sees without corrupting the underlying target.</p>
+
+    <p>Trade-offs I made deliberately: I chose the one-time normalization over a re-parsing approach because the history screen is opened and filtered repeatedly while the app is running, so amortizing the sort cost across many filter operations gives a better overall experience than re-sorting each time. I chose primitive <code>long[]</code> storage over <code>List&lt;LocalDate&gt;</code> to reduce object churn. I chose binary-search boundary lookups over linear filtering because the series is maintained in chronological order by construction, which makes the ordered-access pattern a natural fit.</p>
+
+    <h2>Reflections on the enhancement process</h2>
+
+    <p>Through this enhancement, I learned that building a stronger analytics feature depends just as much on choosing the right way to represent the data as it does on writing the calculations themselves. One of the biggest lessons for me was seeing how much easier the rest of the feature became once the history data was normalized into a format that could be searched, filtered, and reused more consistently. I also learned that algorithmic improvements are not just about making something faster in theory. They&rsquo;re also about making the logic more reliable, reusable, and easier to work through when different user inputs and edge cases come up.</p>
+
+    <p>One of the biggest challenges I faced was fixing the goal-direction logic so that filtering the date range wouldn&rsquo;t accidentally turn a weight-loss scenario into a weight-gain one, or the other way around. Solving that problem made me think more carefully about what information should come from the full history and what should come from the active filtered range. Another challenge was making sure the goal-reached date and projected-goal-date behavior stayed meaningful in both in-progress and already-reached situations. Writing tests for boundary cases, single-entry histories, and filtered views helped me catch assumptions that weren&rsquo;t obvious at first. Overall, this enhancement gave me more confidence in applying algorithms and data structures to a real application problem and in explaining the design choices behind those improvements.</p>
+
+    <h2>The analytics view</h2>
+
+    <p class="muted small"><em>The weight insights screen, reached from the main tracker. This screen did not exist in the original application and shows the user-facing result of the analytics enhancement.</em></p>
+
+    <figure class="single-screenshot">
+      <img src="assets/screenshots/analytics-insights.png" alt="Weight insights screen showing summary, filter, overview, trends, and goal-progress cards" width="1080" height="2400" loading="lazy">
+      <figcaption>The insights screen groups the analytics results into cards. It shows the active date range, summary values, trend calculations, and goal progress. When there is not enough history to support a calculation, the app shows that clearly instead of displaying a misleading zero.</figcaption>
+    </figure>
+
+  </article>
+
+  <nav class="page-end" aria-label="Page navigation">
+    <a href="software-engineering.html" class="page-end__link">
+      <span class="page-end__label">&larr; Previous</span>
+      <span class="page-end__title">Software Engineering &amp; Design</span>
+    </a>
+    <a href="databases.html" class="page-end__link page-end__link--next">
+      <span class="page-end__label">Next &rarr;</span>
+      <span class="page-end__title">Databases</span>
+    </a>
+  </nav>
+
+</main>
+
+<footer class="site-footer">
+  <div>&copy; 2026 Keir Charlton-Molloy</div>
+  <div>
+    Source on <a href="https://github.com/kcsnu/kcsnu.github.io">GitHub</a>
+    &middot; Original artifact: <a href="https://github.com/kcsnu/mere-metrics-original">mere-metrics-original</a>
+    &middot; Enhanced: <a href="https://github.com/kcsnu/mere-metrics-enhanced">mere-metrics-enhanced</a>
+  </div>
+</footer>
+
+</body>
+</html>

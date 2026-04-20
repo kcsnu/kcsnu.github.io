@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Review | Keir Charlton-Molloy</title>
+  <meta name="description" content="Code review walkthrough of the original Mere Metrics: Weight Tracker artifact and planned enhancements across software engineering, algorithms, and databases.">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='Georgia, serif'%3EK%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="site-nav__inner">
+    <a href="./" class="site-nav__brand">Keir Charlton&#8209;Molloy <span>&nbsp;/ ePortfolio</span></a>
+    <ul class="site-nav__links">
+      <li><a href="./">Self-Assessment</a></li>
+      <li><a href="code-review.html" aria-current="page">Code Review</a></li>
+      <li><a href="software-engineering.html">Software Engineering &amp; Design</a></li>
+      <li><a href="algorithms.html">Algorithms &amp; Data Structures</a></li>
+      <li><a href="databases.html">Databases</a></li>
+      <li><a href="files.html">Files</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <header class="page-header">
+    <p class="page-header__eyebrow"><span class="section-number">00</span> Code Review</p>
+    <h1>Code Review</h1>
+    <p class="page-header__lede">I recorded this code review before starting the enhancements so I could explain how the original application was structured, where the main weaknesses were, and how I planned to improve it in each category.</p>
+  </header>
+
+  <article class="prose">
+
+    <div class="video-frame">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/DHpIhU5hk0c"
+        title="Code Review | Mere Metrics: Weight Tracker"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <p class="center small muted">
+      If the embed does not load, the video is also available directly on
+      <a href="https://youtu.be/DHpIhU5hk0c">YouTube</a>.
+    </p>
+
+    <h2>What the review covers</h2>
+
+    <p>The artifact under review is <em>Mere Metrics: Weight Tracker</em>, a native Android application originally developed in Java during a mobile architecture and programming course. It is a small but complete application: it supports account creation with hashed credentials, persistent storage of users and goals, daily weight entries with full create, read, update, and delete behavior, a history screen, and a runtime-permission SMS workflow that notifies the user when a goal is reached.</p>
+
+    <p>The review is structured in three parts, following the standard code-review shape of <em>what exists</em>, <em>what is wrong with it</em>, and <em>what I intend to do about it</em>:</p>
+
+    <h3>Existing functionality</h3>
+    <p>A guided walkthrough of the application&rsquo;s features as they exist today: authentication, data entry and editing, the history view, and the goal-notification flow. It also covers the underlying architecture and persistence layer.</p>
+
+    <h3>Code analysis</h3>
+    <p>An honest look at the parts of the codebase that do not age well. The most significant issues are structural: user-interface fragments hold responsibilities that do not belong to them, dates are stored in a display-friendly format (<code>MM/dd/yyyy</code>) that has to be re-parsed at runtime to sort history correctly, and the history screen constructs its rows manually instead of using a list-recycling component. The persistence layer is functional but minimal, with a schema upgrade path that drops and recreates tables rather than migrating their data.</p>
+
+    <h3>Planned enhancements</h3>
+    <p>For each of the three portfolio categories, the review describes the intended enhancement at a level of detail suitable for a peer or a manager to evaluate the plan. The three planned directions are an architectural refactor, an analytics-focused upgrade of the history feature, and a migration to a typed, versioned persistence layer. These are the three pieces of work documented in the narratives that follow.</p>
+
+  </article>
+
+  <nav class="page-end" aria-label="Page navigation">
+    <a href="./" class="page-end__link">
+      <span class="page-end__label">&larr; Back to</span>
+      <span class="page-end__title">Self-Assessment</span>
+    </a>
+    <a href="software-engineering.html" class="page-end__link page-end__link--next">
+      <span class="page-end__label">Next &rarr;</span>
+      <span class="page-end__title">Software Engineering &amp; Design</span>
+    </a>
+  </nav>
+
+</main>
+
+<footer class="site-footer">
+  <div>&copy; 2026 Keir Charlton-Molloy</div>
+  <div>
+    Source on <a href="https://github.com/kcsnu/kcsnu.github.io">GitHub</a>
+    &middot; Original artifact: <a href="https://github.com/kcsnu/mere-metrics-original">mere-metrics-original</a>
+    &middot; Enhanced: <a href="https://github.com/kcsnu/mere-metrics-enhanced">mere-metrics-enhanced</a>
+  </div>
+</footer>
+
+</body>
+</html>

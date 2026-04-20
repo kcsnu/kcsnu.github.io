@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software Engineering &amp; Design | Keir Charlton-Molloy</title>
+  <meta name="description" content="Refactoring a Java Android application from fragment-heavy logic into a clearer layered structure, and replacing a manual history table with a RecyclerView-based design.">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='Georgia, serif'%3EK%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="site-nav__inner">
+    <a href="./" class="site-nav__brand">Keir Charlton&#8209;Molloy <span>&nbsp;/ ePortfolio</span></a>
+    <ul class="site-nav__links">
+      <li><a href="./">Self-Assessment</a></li>
+      <li><a href="code-review.html">Code Review</a></li>
+      <li><a href="software-engineering.html" aria-current="page">Software Engineering &amp; Design</a></li>
+      <li><a href="algorithms.html">Algorithms &amp; Data Structures</a></li>
+      <li><a href="databases.html">Databases</a></li>
+      <li><a href="files.html">Files</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <header class="page-header">
+    <p class="page-header__eyebrow"><span class="section-number">01</span> Enhancement One</p>
+    <h1>Software Engineering &amp; Design</h1>
+    <p class="page-header__lede">Refactoring a Java Android application from fragment-heavy logic into a clearer layered structure, and replacing the manually rendered history table with a RecyclerView-based design.</p>
+  </header>
+
+  <article class="prose">
+
+    <aside class="meta-panel">
+      <dl>
+        <dt>Artifact</dt>
+        <dd>Mere Metrics: Weight Tracker, a native Android application (Java)</dd>
+        <dt>Focus</dt>
+        <dd>Layered architecture, separation of concerns, RecyclerView-based history UI</dd>
+        <dt>Repositories</dt>
+        <dd>
+          <a href="https://github.com/kcsnu/mere-metrics-original">Original</a> &middot;
+          <a href="https://github.com/kcsnu/mere-metrics-enhanced">Enhanced</a>
+        </dd>
+        <dt>Outcomes addressed</dt>
+        <dd>
+          <ul class="outcome-list">
+            <li>Collaboration</li>
+            <li>Communication</li>
+            <li>Design &amp; trade-offs</li>
+            <li>Tools &amp; techniques</li>
+            <li>Security mindset</li>
+          </ul>
+        </dd>
+      </dl>
+    </aside>
+
+    <h2>About the artifact</h2>
+
+    <p class="dropcap">For this enhancement, I worked on improving Mere Metrics: Weight Tracker, a native Android application I originally built in a mobile architecture and programming course. The app is written in Java and was developed in Android Studio. It already included features like creating an account, logging in, secure password hashing with PBKDF2, and storing user data such as goal weight and daily entries in SQLite. It also let users add, edit, and delete weight records, and included an SMS notification feature based on goal progress. Instead of adding more features this time, I focused on improving the software design and engineering of the application rather than layering on unrelated new functionality.</p>
+
+    <h2>Why I included this artifact</h2>
+
+    <p>I selected this artifact for my ePortfolio because it shows a full mobile app experience in one project. It covers UI design, screen navigation, backend logic, data storage, and even some basic security practices. The original version worked, but most of the logic was centered inside fragments, which made everything feel harder to update later. So for this enhancement, I reorganized the project into clearer layers: <code>ui</code>, <code>service</code>, <code>data</code>, <code>model</code>, and <code>util</code>. I also replaced the old way of showing weight history with a RecyclerView setup, which is more efficient. On top of that, I moved validation and workflow logic out of the fragments and into service classes. This made the code easier to read and reuse, and it helped separate responsibilities better without changing the original application behavior.</p>
+
+    <h2>Course outcomes alignment</h2>
+
+    <p>This enhancement met the course outcomes I originally planned to address in my enhancement plan, especially outcomes 1, 2, 4, and 5, while also partially supporting outcome 3. It supports outcome 1 by making the project easier for another developer to understand, maintain, and extend through better modular design and clearer organization. It supports outcome 2 through the written narrative, code review, and my ability to explain the refactor and the design trade-offs in a professional way. It directly supports outcome 4 because I applied software engineering techniques like architectural refactoring, reusable UI component design, service-based workflows, and improved separation of concerns. It also supports outcome 5 by preserving security-related behaviors such as password hashing, session handling, input validation, and permission-aware SMS functionality. My main update was holding off on a deeper database redesign for this enhancement, since that made more sense as a later improvement.</p>
+
+    <h2>Reflections on the enhancement process</h2>
+
+    <p>Through this enhancement, I learned that improving software design isn&rsquo;t just about moving code into more files. It&rsquo;s about deciding where responsibilities belong and making the application easier to understand, maintain, and extend. Refactoring the app showed me how much cleaner the user interface becomes when business logic, validation, and persistence-related work are no longer all handled directly in the fragments.</p>
+
+    <p>One of the biggest challenges was preserving the original behavior of the application while reorganizing its structure. I had to make sure features such as login, goal updates, weight entry, editing, deleting, and SMS-related behavior still worked after the refactor. I also started to see that there&rsquo;s a balance between improving structure and overdoing it. Even though some parts like the repository layer are still pretty simple, this update gave me a much stronger base to build on later and helped me understand real trade-offs that come with software design decisions.</p>
+
+    <h2>Before and after</h2>
+
+    <p class="muted small"><em>The weight-tracker screen, the application&rsquo;s primary screen, before and after the refactor. The changes are visible at a glance: what was a flat list of inputs above a manually generated table becomes a card-based layout with a stats summary, a clearer log-entry area, a dedicated entry point to the analytics view, and a RecyclerView-backed list with per-entry overflow menus.</em></p>
+
+    <div class="screenshot-pair">
+      <figure>
+        <img src="assets/screenshots/sde-tracker-before.png" alt="Main tracker screen in the original application, flat layout with TableLayout" width="1080" height="2400" loading="lazy">
+        <figcaption><strong>Before.</strong> The original main screen placed date and weight inputs, a goal-setting row, an SMS Notifications button, and a <code>TableLayout</code> of past entries into a single flat scroll. Adding a new entry, updating a goal, and reading history all shared one dense screen.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/screenshots/sde-tracker-after.png" alt="Main tracker screen in the enhanced application, card-based layout with stats summary and RecyclerView" width="1080" height="2400" loading="lazy">
+        <figcaption><strong>After.</strong> The enhanced screen leads with a four-metric summary card (current weight, goal, last logged, total entries), moves logging into its own card, adds an &ldquo;Insights&rdquo; action that reaches the new analytics view, and lists entries via <code>RecyclerView</code> with per-row overflow menus. Goal-setting and entry-editing are now handled through dedicated dialogs rather than inline fields.</figcaption>
+      </figure>
+    </div>
+
+  </article>
+
+  <nav class="page-end" aria-label="Page navigation">
+    <a href="code-review.html" class="page-end__link">
+      <span class="page-end__label">&larr; Previous</span>
+      <span class="page-end__title">Code Review</span>
+    </a>
+    <a href="algorithms.html" class="page-end__link page-end__link--next">
+      <span class="page-end__label">Next &rarr;</span>
+      <span class="page-end__title">Algorithms &amp; Data Structures</span>
+    </a>
+  </nav>
+
+</main>
+
+<footer class="site-footer">
+  <div>&copy; 2026 Keir Charlton-Molloy</div>
+  <div>
+    Source on <a href="https://github.com/kcsnu/kcsnu.github.io">GitHub</a>
+    &middot; Original artifact: <a href="https://github.com/kcsnu/mere-metrics-original">mere-metrics-original</a>
+    &middot; Enhanced: <a href="https://github.com/kcsnu/mere-metrics-enhanced">mere-metrics-enhanced</a>
+  </div>
+</footer>
+
+</body>
+</html>

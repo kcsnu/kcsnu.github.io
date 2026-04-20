@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keir Charlton-Molloy | Computer Science ePortfolio</title>
+  <meta name="description" content="Computer science capstone ePortfolio: software engineering, algorithms and data structures, and databases. Focus on secure, maintainable application development.">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='Georgia, serif'%3EK%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="site-nav__inner">
+    <a href="./" class="site-nav__brand">Keir Charlton&#8209;Molloy <span>&nbsp;/ ePortfolio</span></a>
+    <ul class="site-nav__links">
+      <li><a href="./" aria-current="page">Self-Assessment</a></li>
+      <li><a href="code-review.html">Code Review</a></li>
+      <li><a href="software-engineering.html">Software Engineering &amp; Design</a></li>
+      <li><a href="algorithms.html">Algorithms &amp; Data Structures</a></li>
+      <li><a href="databases.html">Databases</a></li>
+      <li><a href="files.html">Files</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <header class="home-intro">
+    <p class="home-intro__subtitle">Computer Science Capstone ePortfolio</p>
+    <h1 class="home-intro__name">Keir <em>Charlton-Molloy</em></h1>
+    <p class="page-header__lede">I&rsquo;m an aspiring software engineer focused on secure, maintainable application development. In this portfolio, I show how I improved one Android application across software design, algorithms and data structures, and databases.</p>
+  </header>
+
+  <article class="prose">
+
+    <h2>Professional Self-Assessment</h2>
+
+    <p class="muted small"><em>Keir Charlton-Molloy &middot; Bachelor of Science in Computer Science</em></p>
+
+    <p class="dropcap">I&rsquo;m graduating from Southern New Hampshire University with a clear sense of what I want to do next. My goal is an entry-level software engineer or application developer role, with a longer-term interest in security-focused work. Before returning to school, I worked as a business analyst at a bank and later as an investor analyst at a fin-tech startup, so I was already comfortable working in professional settings and explaining technical changes to non-technical users. What&rsquo;s new for me is being able to build the systems those earlier roles depended on rather than only using them.</p>
+
+    <p>This portfolio represents that shift. The three enhancements that follow show that I can take an existing application and improve it across the main areas of computer science practice: software design, algorithms and data structures, and databases. Before those, I want to reflect on the skills the program has helped me build, using examples both inside and outside the portfolio artifacts.</p>
+
+    <h3>Collaborating in a team environment</h3>
+
+    <p>Two experiences shaped how I think about collaboration. The first was a full-stack group project in my principles of software development course. I ended up writing the application code alone while my teammates focused on the presentation, which taught me how to scope realistically and hand off pieces of the work to people with different strengths. The second was a pair-programming partnership in my programming languages course. My partner was more experienced than I was at the time, and he pushed consistently for the highest possible grade. I spent much of that course reading his code and learning from how he debugged. Both experiences taught me that collaboration looks different depending on who you&rsquo;re working with, and that being honest about what each person can contribute saves time later.</p>
+
+    <p>In this capstone, the collaboration has been indirect but still real. The code review video, the enhancement narratives, and the in-code comments I added to the artifact are all written for someone who will read my work after me. I tried to treat that future reader as a real person rather than a rubric checkbox, because in a professional setting that reader is usually a teammate picking up where someone else left off.</p>
+
+    <h3>Communicating with stakeholders</h3>
+
+    <p>Most of my stakeholder communication experience comes from the business analyst role I held before returning to school. A large part of that job was explaining technical changes to non-technical users. When the bank rolled out new Windows versions, for example, I translated between the IT team and the data entry staff: what was changing, what was staying the same, what they needed to do differently, and what to do if something went wrong. That work taught me that stakeholder communication isn&rsquo;t about simplifying until everything is vague. It&rsquo;s about figuring out what each audience actually needs to know and then saying exactly that.</p>
+
+    <p>I tried to carry the same habit into the portfolio. Each enhancement narrative is written to be useful to a reviewer who wants to see that I understand the engineering, and also to a future employer who may not care about the specifics of Android lifecycle management but does care about how I make decisions and communicate trade-offs.</p>
+
+    <h3>Data structures and algorithms</h3>
+
+    <p>My foundation in this area came from two courses that covered the core material between them: sorting, searching, trees, graphs, hash tables, and complexity analysis. Between them, I became comfortable thinking about how choices in data representation affect what is possible downstream.</p>
+
+    <p>The analytics enhancement in my capstone artifact draws directly on that background. The original application stored weight entries as formatted text dates and re-sorted them from scratch every time the history screen refreshed. For the enhancement, I normalized dates into ISO form so they could be compared and filtered numerically, kept entries in chronological order so range queries could be bounded, and built rolling averages, weekly and monthly change calculations, percent progress toward the goal, and a projected goal-reach date on top of that representation. Most of the work wasn&rsquo;t in the arithmetic itself. It was in choosing the right representation so filtered views and trend calculations could run efficiently rather than recomputing from raw text every time.</p>
+
+    <h3>Software engineering and database</h3>
+
+    <p>My software engineering foundation built up across coursework in software development lifecycle, system analysis and design, software testing, and full-stack development. The lifecycle and analysis work taught me to think about requirements, documentation, and design before writing code. Testing gave me a discipline I hadn&rsquo;t had before, including unit tests and treating boundary cases as part of normal development rather than something to add at the end. My database foundation came from SQL and client/server work, where I used both relational and document-style data models.</p>
+
+    <p>In this portfolio, the software engineering enhancement reorganized my capstone artifact from a fragment-centered design into a layered architecture with separate <code>ui</code>, <code>service</code>, <code>data</code>, <code>model</code>, and <code>util</code> packages, and replaced a manually generated history table with a RecyclerView-based list. The database enhancement migrated the persistence layer from SQLiteOpenHelper to Room, with typed entities, DAOs, and versioned schema migrations. I replaced the original drop-and-recreate upgrade behavior with explicit migrations between versions, including an ISO date conversion utility so existing text dates are preserved across the upgrade rather than lost. Data integrity is enforced at the schema level through foreign keys, a unique constraint on user and entry-date pairs, and indexes on the columns the application actually queries.</p>
+
+    <h3>Security</h3>
+
+    <p>My focused security work in the program came through a software security course that covered input validation, authentication and authorization, safe error handling, and thinking about software from an attacker&rsquo;s point of view rather than only a legitimate user&rsquo;s. Beyond that course, most of what I&rsquo;ve done has come from folding security thinking into whatever else I was building.</p>
+
+    <p>My capstone artifact has a meaningful amount of that thinking folded in. Passwords are hashed with PBKDF2 rather than stored in plaintext. Permission-sensitive features like the SMS notification flow are gated behind explicit runtime permission checks rather than assumed. The persistence layer uses parameterized access through Room DAOs instead of concatenating strings into SQL. Data integrity is enforced at the schema level so the interface cannot accidentally insert malformed records, and the migration path preserves user data rather than destroying it on every upgrade. None of that is dramatic on its own, and that&rsquo;s the point. Most real-world security work is a series of small decisions made consistently rather than a single impressive feature, and this program has helped me build the habit of making those decisions while writing code rather than after.</p>
+
+    <h3>Where I&rsquo;m headed next</h3>
+
+    <p>I&rsquo;ve done some informal research into entry-level software engineering roles, mostly by looking through job postings and paying attention to the skills and tools that keep appearing. Java, SQL, version control, and familiarity with mobile or web frameworks come up consistently, which matches well with what I&rsquo;ve been working with in this program. I&rsquo;m also planning to complement the degree with a certification, most likely AWS Cloud Practitioner or CompTIA Security+, since cloud infrastructure and security awareness keep showing up in descriptions for the kinds of roles I want.</p>
+
+    <h3>How the artifacts fit together</h3>
+
+    <p>I chose to use a single artifact across all three enhancement categories because it let me show that I can reason about a codebase as a whole rather than treating each category as a standalone demo. The artifact is <em>Mere Metrics: Weight Tracker</em>, a native Android application I originally built for a mobile architecture and programming course. It was a good starting point because it&rsquo;s small but complete, with account creation and login, persistent data, runtime permissions, SMS notifications, UI navigation, and a full user-facing workflow. Improving it three different ways meant I had to think about how each change interacted with the others. The RecyclerView refactor from the software engineering category made the enhanced analytics display work cleanly, and the Room schema from the database category made both the refactor and the analytics engine easier to reason about. If I had used three separate artifacts, the connections between the work would be hidden. Using one makes them visible.</p>
+
+    <p>The three enhancement pages that follow cover the specifics. Each one describes the artifact, explains why it fit the category, walks through what changed, and closes with a reflection on what I learned. The code review video recorded earlier in the term covers the pre-enhancement state of the application and walks through my reasoning for each planned change. Together, the video, the three narratives, and the linked GitHub repositories should give a reviewer or a future employer enough to see not only that I can write working software, but that I can take something small and make it genuinely better.</p>
+
+  </article>
+
+  <!-- Section index -->
+  <nav class="contents" aria-label="Portfolio contents">
+    <a href="code-review.html" class="contents__item">
+      <span class="contents__item-num">00</span>
+      <span class="contents__item-title">Code Review</span>
+      <span class="contents__item-desc">Walkthrough of the original artifact and planned enhancements.</span>
+    </a>
+    <a href="software-engineering.html" class="contents__item">
+      <span class="contents__item-num">01</span>
+      <span class="contents__item-title">Software Engineering &amp; Design</span>
+      <span class="contents__item-desc">Refactoring the application from fragment-heavy logic into clearer layers.</span>
+    </a>
+    <a href="algorithms.html" class="contents__item">
+      <span class="contents__item-num">02</span>
+      <span class="contents__item-title">Algorithms &amp; Data Structures</span>
+      <span class="contents__item-desc">Expanding the weight history feature with analytics and insights.</span>
+    </a>
+    <a href="databases.html" class="contents__item">
+      <span class="contents__item-num">03</span>
+      <span class="contents__item-title">Databases</span>
+      <span class="contents__item-desc">Replacing the SQLite helper with a Room-based persistence layer.</span>
+    </a>
+  </nav>
+
+</main>
+
+<footer class="site-footer">
+  <div>&copy; 2026 Keir Charlton-Molloy</div>
+  <div>
+    Source on <a href="https://github.com/kcsnu/kcsnu.github.io">GitHub</a>
+    &middot; Original artifact: <a href="https://github.com/kcsnu/mere-metrics-original">mere-metrics-original</a>
+    &middot; Enhanced: <a href="https://github.com/kcsnu/mere-metrics-enhanced">mere-metrics-enhanced</a>
+  </div>
+</footer>
+
+</body>
+</html>
