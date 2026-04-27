@@ -1,4 +1,4 @@
-# Keir Charlton-Molloy: Computer Science ePortfolio
+# Keir: Computer Science ePortfolio
 
 This repository contains my capstone ePortfolio for the Bachelor of Science in Computer Science. The live site is at [kcsnu.github.io](https://kcsnu.github.io/).
 
